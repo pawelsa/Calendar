@@ -8,6 +8,12 @@ extern sf::RenderWindow window;
 
 class Year {
 
+
+
+	const int YearNumber;
+	
+
+
 public:
 
 	Year(int mYear) :YearNumber(mYear) {

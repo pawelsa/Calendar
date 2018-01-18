@@ -33,6 +33,6 @@ public:
 
 
 private:
-	std::vector<std::string> DayNames = {"Monday", "Teusday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+	
 
 };
