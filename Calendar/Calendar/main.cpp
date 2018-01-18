@@ -1,5 +1,5 @@
 #include "Calendar.h"
-
+#include "Year.h"
 
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Calendar");
@@ -8,7 +8,7 @@
 
 int main() {
 
-
+	auto Year = new Year(2018);
 
 
 	while (window.isOpen())
