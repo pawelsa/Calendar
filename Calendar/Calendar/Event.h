@@ -6,7 +6,10 @@ class Event {
 	std::string Description;
 	Person Man;
 public:
-	Event();
+	Event()
+	{
+
+	}
 	Event(int startingtime, int endingtime, std::string description, Person man)
 	{
 		this->StartingTime = startingtime;
@@ -14,6 +17,9 @@ public:
 		this->Description = description;
 		this->Man = man;
 	}
-	~Event();
+	~Event()
+	{
+
+	}
 
 };

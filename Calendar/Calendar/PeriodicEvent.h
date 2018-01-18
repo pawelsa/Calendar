@@ -3,4 +3,14 @@
 
 class PeriodicEvent : public Event {
 	
+
+public:
+	PeriodicEvent()
+	{
+
+	}
+	~PeriodicEvent()
+	{
+
+	}
 };
