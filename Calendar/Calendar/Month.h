@@ -7,11 +7,22 @@
 class Month
 {
 public:
-	Month();
+	Month() {};
+	Month(std::string nameOfMonth)
+	{
+		this->Name = nameOfMonth;
+	};
+
+	Month(std::string nameOfMonth, int monthNumber)
+	{
+		this->Name = nameOfMonth;
+		this->Number = monthNumber;
+	};
+
 	~Month();
 
-	std::list<Week> Weeks;
+	std::list<Week*> Weeks;
 	std::string Name;
-
+	int Number;
 
 };
