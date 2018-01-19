@@ -8,7 +8,6 @@ extern sf::RenderWindow window;
 class Year {
 
 
-	sf::Text year_number;				//Number in square
 
 	const int YearNumber;
 	
