@@ -8,10 +8,14 @@ extern sf::RenderWindow window;
 
 class Calendar {
 
-	std::vector<Year*> yearList;
 
-	sf::RectangleShape ramka;
-	const sf::Vector2f size = sf::Vector2f(window.getSize()) - sf::Vector2f(200, 200);
+	sf::RectangleShape BlackOutliner;
+	const sf::Vector2f SizeOfBlackOutliner = sf::Vector2f(window.getSize()) - sf::Vector2f(200, 200);	//200 black outlier around calendar
+
+	sf::RectangleShape year_overview;	//One square
+
+	std::vector<Year*> YearList;
+
 
 public:
 
@@ -29,17 +33,51 @@ public:
 		}
 
 
-		for (int i = 2014; i < 2025; i++) {
 
-			yearList.push_back(new Year(i));
+
+		time_t theTime = time(NULL);
+		struct tm *aTime = localtime(&theTime);
+
+
+		for (int i = aTime->tm_year; i < 2025; i++) {
+
+			YearList.push_back(new Year(i));
 
 		}
 
-		ramka.setPosition(sf::Vector2f(100, 100));
-		ramka.setSize(size);
-		ramka.setOutlineThickness(100);
-		ramka.setOutlineColor(sf::Color::Black);
-		ramka.setFillColor(sf::Color::Transparent);
+
+		year_overview.setSize(dim::sizeOfItem_Year);
+		year_overview.setFillColor(sf::Color::Transparent);
+		year_overview.setOutlineThickness(5);
+
+		try {
+
+			year_number.setFont(dim::font);
+			year_number.setCharacterSize(dim::NumberSizeInYear);
+			year_number.setFillColor(sf::Color::White);
+
+		}
+		catch (char *e) {
+
+			std::cout << e;
+			exit(1);
+		}
+
+		year_number.setString(std::to_string(mYear));
+
+
+		BlackOutliner.setPosition(sf::Vector2f(100, 100));
+		BlackOutliner.setSize(SizeOfBlackOutliner);
+		BlackOutliner.setOutlineThickness(100);
+		BlackOutliner.setOutlineColor(sf::Color::Black);
+		BlackOutliner.setFillColor(sf::Color::Transparent);
+
+
+
+
+
+
+
 
 	}
 
@@ -56,20 +94,47 @@ public:
 
 		int i;
 
-		for (i = 0; yearList.at(i)->returnYear() != (aTime->tm_year + 1900); i++);
+		for (i = 0; YearList.at(i)->returnYear() != (aTime->tm_year + 1900); i++);
 
 		i--;
 
 		for (int j = i; j < i + maxItems; j++) {
 
-			yearList.at(j)->dispalay(j - i);
+			YearList.at(j)->dispalay(j - i);
 		}
 
-		window.draw(ramka);
 
 	}
 
+	void dispalay(int which_on_screen) {
 
+
+
+		year_overview.setPosition(dim::itemOffset_Year + sf::Vector2f(0, which_on_screen * (dim::sizeOfItem_Year.y + 20)));		//20 - distance between squares
+		year_number.setPosition(dim::itemOffset_Year + sf::Vector2f(0, which_on_screen * (dim::sizeOfItem_Year.y + 20)) + dim::textOffset_Year);
+
+		int control = (window.getSize().y / dim::sizeOfItem_Year.y) - 1;
+
+		if (which_on_screen == 0 || which_on_screen == control) {
+
+			sf::Color to_alpha = year_overview.getOutlineColor();
+			to_alpha.a = 135;
+
+			year_overview.setOutlineColor(to_alpha);
+		}
+		else if (year_overview.getOutlineColor().a == 135) {
+
+			sf::Color to_alpha = year_overview.getOutlineColor();
+			to_alpha.a = 255;
+
+			year_overview.setOutlineColor(to_alpha);
+		}
+
+		window.draw(year_overview);
+		window.draw(year_number);
+
+		window.draw(BlackOutliner);		//have to be the last
+	}
 
 
 };
